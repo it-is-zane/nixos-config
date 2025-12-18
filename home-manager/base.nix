@@ -2,7 +2,7 @@
 {
   home.stateVersion = "25.11";
 
-  home.sessionVariables.EDITOR = "hx";
+  systemd.user.sessionVariables.EDITOR = "hx";
 
   programs.helix = {
     enable = true;
