@@ -25,7 +25,7 @@
         modules = [
           inputs.home-manager.nixosModules.home-manager
           {
-            inputs.home-manager.sharedModules = [
+            home-manager.sharedModules = [
               inputs.plasma-manager.homeModules.plasma-manager
             ];
           }
