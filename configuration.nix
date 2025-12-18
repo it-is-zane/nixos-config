@@ -12,6 +12,7 @@
 let
   home-manager-base = {
     home.stateVersion = "25.11";
+    environment.variables.EDITOR = "hx";
     programs.helix = {
       enable = true;
       defaultEditor = true;
@@ -300,11 +301,6 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.helix = {
-    enable = true;
-    defaultEditor = true;
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -312,6 +308,7 @@ in
     #  wget
     git
     discord-ptb
+    helix
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
