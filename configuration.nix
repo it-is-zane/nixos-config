@@ -2,10 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
   home-manager-base = {
     home.stateVersion = "25.11";
     programs.helix = {
@@ -32,16 +36,9 @@ let
     ];
   };
   home-manager-user-base = {
-    imports =
-      let
-        plasma-manager = builtins.fetchTarball {
-          url = "https://github.com/nix-community/plasma-manager/archive/refs/heads/trunk.tar.gz";
-          sha256 = "sha256:1iy69k2557mg4lfaif4nncm3ji3ap8hjrfbzh5hz2pskkmbz18p7";
-        };
-      in
-      [
-        (plasma-manager + "/modules")
-      ];
+    imports = [
+      (inputs.plasma-manager + "/modules")
+    ];
 
     programs.plasma = {
       enable = true;
