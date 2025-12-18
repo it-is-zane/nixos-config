@@ -300,7 +300,10 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.helix.defaultEditor = true;
+  programs.helix = {
+    enable = true;
+    defaultEditor = true;
+  }
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -308,7 +311,6 @@ in
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
     git
-    helix
     discord-ptb
   ];
 
