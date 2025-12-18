@@ -152,7 +152,7 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    (import "${home-manager}/nixos")
+    (import "${inputs.home-manager}/nixos")
   ];
 
   # Bootloader.
