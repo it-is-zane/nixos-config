@@ -1,0 +1,342 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, ... }:
+
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+  home-manager-base = {
+    home.stateVersion = "25.11";
+    programs.helix = {
+      enable = true;
+      settings = {
+        theme = "vim_dark_high_contrast";
+        editor.cursor-shape = {
+          normal = "block";
+          insert = "bar";
+          select = "underline";
+        };
+      };
+      languages.language = [
+        {
+          name = "nix";
+          auto-format = true;
+          formatter.command = pkgs.lib.getExe pkgs.nixfmt-rfc-style;
+        }
+      ];
+    };
+    home.packages = with pkgs; [
+      bottom
+    ];
+  };
+  home-manager-user-base = {
+    imports =
+      let
+        plasma-manager = builtins.fetchTarball {
+          url = "https://github.com/nix-community/plasma-manager/archive/refs/heads/trunk.tar.gz";
+          sha256 = "sha256:1iy69k2557mg4lfaif4nncm3ji3ap8hjrfbzh5hz2pskkmbz18p7";
+        };
+      in
+      [
+        (plasma-manager + "/modules")
+      ];
+
+    programs.plasma = {
+      enable = true;
+
+      workspace = {
+        lookAndFeel = "org.kde.breezedark.desktop";
+        wallpaperPlainColor = "0,0,0";
+      };
+
+      panels = [
+        {
+          location = "top";
+          floating = true;
+          widgets = [
+            "org.kde.plasma.marginsseparator"
+            "org.kde.plasma.userswitcher"
+            "org.kde.plasma.marginsseparator"
+            "org.kde.plasma.pager"
+            "org.kde.plasma.panelspacer"
+            "org.kde.plasma.digitalclock"
+            "org.kde.plasma.panelspacer"
+            "org.kde.plasma.systemtray"
+          ];
+        }
+        {
+          location = "bottom";
+          hiding = "autohide";
+          lengthMode = "fit";
+          floating = true;
+          widgets = [
+            {
+              iconTasks = {
+                launchers = [ ];
+              };
+            }
+          ];
+        }
+      ];
+    };
+
+    # https://wiki.nixos.org/wiki/Kitty
+    programs.kitty = {
+      enable = true;
+      settings = {
+        confirm_os_window_close = 0;
+        dynamic_background_opacity = true;
+        enable_audio_bell = false;
+        mouse_hide_wait = "-1.0";
+        window_padding_width = 10;
+        background_opacity = "0.5";
+        background_blur = 5;
+        symbol_map =
+          let
+            mappings = [
+              "U+23FB-U+23FE"
+              "U+2B58"
+              "U+E200-U+E2A9"
+              "U+E0A0-U+E0A3"
+              "U+E0B0-U+E0BF"
+              "U+E0C0-U+E0C8"
+              "U+E0CC-U+E0CF"
+              "U+E0D0-U+E0D2"
+              "U+E0D4"
+              "U+E700-U+E7C5"
+              "U+F000-U+F2E0"
+              "U+2665"
+              "U+26A1"
+              "U+F400-U+F4A8"
+              "U+F67C"
+              "U+E000-U+E00A"
+              "U+F300-U+F313"
+              "U+E5FA-U+E62B"
+            ];
+          in
+          (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
+      };
+    };
+
+    home.packages = with pkgs; [
+      kdePackages.kclock
+      # blender
+      blender-hip
+    ];
+  };
+  home-manager-programmer-base = {
+    programs.helix = {
+      enable = true;
+      settings = {
+        theme = "vim_dark_high_contrast";
+        editor.cursor-shape = {
+          normal = "block";
+          insert = "bar";
+          select = "underline";
+        };
+      };
+      languages.language = [
+        {
+          name = "nix";
+          auto-format = true;
+          formatter.command = pkgs.lib.getExe pkgs.nixfmt-rfc-style;
+        }
+      ];
+    };
+    home.packages = with pkgs; [
+      rustup
+      python3
+    ];
+  };
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    (import "${home-manager}/nixos")
+  ];
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "America/Los_Angeles";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
+
+  # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
+  services.xserver.enable = true;
+
+  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  hardware.bluetooth.enable = true;
+
+  fileSystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/e3d0a5b0-792e-4edc-b96f-37f67314c71a";
+    fsType = "ext4";
+    options = [
+      "rw"
+      "exec"
+      "nofail"
+    ];
+  };
+
+  # nix.settings.experimental-features = [
+  #   "nix-command"
+  #   "flakes"
+  # ];
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.zaneg = {
+    isNormalUser = true;
+    description = "Zane Gant";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [
+      # kdePackages.kate
+      # thunderbird
+    ];
+  };
+
+  users.users.games = {
+    isNormalUser = true;
+    description = "Steam Isolation";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [
+      steam
+      # kdePackages.kate
+      # thunderbird
+    ];
+  };
+
+  home-manager.users.root = {
+    imports = [ home-manager-base ];
+  };
+  home-manager.users.zaneg = {
+    imports = [
+      home-manager-base
+      home-manager-user-base
+      home-manager-programmer-base
+    ];
+  };
+  home-manager.users.games = {
+    imports = [
+      home-manager-base
+      home-manager-user-base
+    ];
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
+  # Install firefox.
+  programs.firefox.enable = true;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    git
+    helix
+    discord-ptb
+  ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # List services that you want to enable:
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "25.11"; # Did you read the comment?
+
+}
