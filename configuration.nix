@@ -8,147 +8,6 @@
   inputs,
   ...
 }:
-
-let
-  home-manager-base = {
-    home.stateVersion = "25.11";
-    home.sessionVariables.EDITOR = "hx";
-    programs.helix = {
-      enable = true;
-      defaultEditor = true;
-      settings = {
-        theme = "vim_dark_high_contrast";
-        editor.cursor-shape = {
-          normal = "block";
-          insert = "bar";
-          select = "underline";
-        };
-      };
-      languages.language = [
-        {
-          name = "nix";
-          auto-format = true;
-          formatter.command = pkgs.lib.getExe pkgs.nixfmt-rfc-style;
-        }
-      ];
-    };
-    home.packages = with pkgs; [
-      bottom
-    ];
-  };
-  home-manager-user-base = {
-    imports = [
-      (inputs.plasma-manager + "/modules")
-    ];
-
-    programs.plasma = {
-      enable = true;
-
-      workspace = {
-        lookAndFeel = "org.kde.breezedark.desktop";
-        wallpaperPlainColor = "0,0,0";
-      };
-
-      panels = [
-        {
-          location = "top";
-          floating = true;
-          widgets = [
-            "org.kde.plasma.marginsseparator"
-            "org.kde.plasma.userswitcher"
-            "org.kde.plasma.marginsseparator"
-            "org.kde.plasma.pager"
-            "org.kde.plasma.panelspacer"
-            "org.kde.plasma.digitalclock"
-            "org.kde.plasma.panelspacer"
-            "org.kde.plasma.systemtray"
-          ];
-        }
-        {
-          location = "bottom";
-          hiding = "autohide";
-          lengthMode = "fit";
-          floating = true;
-          widgets = [
-            {
-              iconTasks = {
-                launchers = [ ];
-              };
-            }
-          ];
-        }
-      ];
-    };
-
-    # https://wiki.nixos.org/wiki/Kitty
-    programs.kitty = {
-      enable = true;
-      settings = {
-        confirm_os_window_close = 0;
-        dynamic_background_opacity = true;
-        enable_audio_bell = false;
-        mouse_hide_wait = "-1.0";
-        window_padding_width = 10;
-        background_opacity = "0.5";
-        background_blur = 5;
-        symbol_map =
-          let
-            mappings = [
-              "U+23FB-U+23FE"
-              "U+2B58"
-              "U+E200-U+E2A9"
-              "U+E0A0-U+E0A3"
-              "U+E0B0-U+E0BF"
-              "U+E0C0-U+E0C8"
-              "U+E0CC-U+E0CF"
-              "U+E0D0-U+E0D2"
-              "U+E0D4"
-              "U+E700-U+E7C5"
-              "U+F000-U+F2E0"
-              "U+2665"
-              "U+26A1"
-              "U+F400-U+F4A8"
-              "U+F67C"
-              "U+E000-U+E00A"
-              "U+F300-U+F313"
-              "U+E5FA-U+E62B"
-            ];
-          in
-          (builtins.concatStringsSep "," mappings) + " Symbols Nerd Font";
-      };
-    };
-
-    home.packages = with pkgs; [
-      kdePackages.kclock
-      # blender
-      blender-hip
-    ];
-  };
-  home-manager-programmer-base = {
-    programs.helix = {
-      enable = true;
-      settings = {
-        theme = "vim_dark_high_contrast";
-        editor.cursor-shape = {
-          normal = "block";
-          insert = "bar";
-          select = "underline";
-        };
-      };
-      languages.language = [
-        {
-          name = "nix";
-          auto-format = true;
-          formatter.command = pkgs.lib.getExe pkgs.nixfmt-rfc-style;
-        }
-      ];
-    };
-    home.packages = with pkgs; [
-      rustup
-      python3
-    ];
-  };
-in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -273,19 +132,19 @@ in
   };
 
   home-manager.users.root = {
-    imports = [ home-manager-base ];
+    imports = [ ./home-manager/base.nix ];
   };
   home-manager.users.zaneg = {
     imports = [
-      home-manager-base
-      home-manager-user-base
-      home-manager-programmer-base
+      ./home-manager/base.nix
+      ./home-manager/user.nix
+      ./home-manager/programer.nix
     ];
   };
   home-manager.users.games = {
     imports = [
-      home-manager-base
-      home-manager-user-base
+      ./home-manager/base.nix
+      ./home-manager/user.nix
     ];
   };
 
