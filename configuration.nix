@@ -138,7 +138,7 @@
     imports = [
       ./home-manager/base.nix
       ./home-manager/user.nix
-      ./home-manager/programer.nix
+      ./home-manager/programmer.nix
     ];
   };
   home-manager.users.games = {
