@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, plasma-manager, ... }:
 {
   imports = [
-    (inputs.plasma-manager + "/modules")
+    (plasma-manager + "/modules")
   ];
 
   programs.plasma = {
