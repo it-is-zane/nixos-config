@@ -23,6 +23,8 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
+          plasma-manager.nixosModules.plasma-manager
+          home-manager.nixosModules.home-manager
           ./configuration.nix
         ];
       };
