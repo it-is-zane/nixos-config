@@ -12,7 +12,7 @@
 let
   home-manager-base = {
     home.stateVersion = "25.11";
-    sessionVariables.EDITOR = "hx";
+    home.sessionVariables.EDITOR = "hx";
     programs.helix = {
       enable = true;
       defaultEditor = true;
