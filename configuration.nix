@@ -10,6 +10,7 @@ let
     home.stateVersion = "25.11";
     programs.helix = {
       enable = true;
+      defaultEditor = true;
       settings = {
         theme = "vim_dark_high_contrast";
         editor.cursor-shape = {
@@ -240,10 +241,10 @@ in
     ];
   };
 
-  # nix.settings.experimental-features = [
-  #   "nix-command"
-  #   "flakes"
-  # ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.zaneg = {
