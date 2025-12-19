@@ -23,5 +23,6 @@
     (python3.withPackages (python-pkgs: [
       python-pkgs.numpy
     ]))
+    ty
   ];
 }
