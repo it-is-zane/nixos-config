@@ -20,6 +20,8 @@
   };
   home.packages = with pkgs; [
     rustup
-    python3
+    (python3.withPackages (python-pkgs: [
+      python-pkgs.numpy
+    ]))
   ];
 }
