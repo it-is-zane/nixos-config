@@ -28,6 +28,8 @@ in
   home.packages = with pkgs; [
     rustup
     python
+    ty
+    ruff
   ];
   home.sessionVariables = {
     PYTHONPATH = "${python}/${python.sitePackages}";
