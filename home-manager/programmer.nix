@@ -1,4 +1,11 @@
 { pkgs, ... }:
+let
+  python = pkgs.python3.withPackages (
+    python-pkgs: with python-pkgs; [
+      numpy
+    ]
+  );
+in
 {
   programs.helix = {
     enable = true;
@@ -20,9 +27,9 @@
   };
   home.packages = with pkgs; [
     rustup
-    (python3.withPackages (python-pkgs: [
-      python-pkgs.numpy
-    ]))
-    ty
+    python
   ];
+  home.sessionVariables = {
+    PYTHONPATH = "${python}/${python.sitePackages}";
+  };
 }
