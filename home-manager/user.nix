@@ -25,6 +25,7 @@
       }
       {
         location = "bottom";
+        height = 80;
         hiding = "autohide";
         lengthMode = "fit";
         floating = true;
