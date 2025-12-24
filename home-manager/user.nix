@@ -79,7 +79,7 @@
   };
 
   home.packages = with pkgs; [
-    kdePackages.kclock
     blender-hip
+    kronometer
   ];
 }
