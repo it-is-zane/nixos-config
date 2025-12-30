@@ -16,6 +16,11 @@ in
         insert = "bar";
         select = "underline";
       };
+      editor.end-of-line-diagnostics = "hint";
+      editor.inline-diagnostics = {
+        cursor-line = "error";
+        other-liens = "error";
+      };
     };
     languages.language = [
       {
