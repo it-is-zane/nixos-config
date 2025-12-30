@@ -19,7 +19,7 @@ in
       editor.end-of-line-diagnostics = "hint";
       editor.inline-diagnostics = {
         cursor-line = "error";
-        other-liens = "error";
+        other-lines = "error";
       };
     };
     languages.language = [
