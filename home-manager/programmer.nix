@@ -30,6 +30,7 @@ in
     python
     ty
     ruff
+    gcc
   ];
   home.sessionVariables = {
     PYTHONPATH = "${python}/${python.sitePackages}";
