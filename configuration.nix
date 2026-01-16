@@ -50,6 +50,9 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  services.scx.enable = true;
+  services.scx.scheduler = "scx_lavd";
+
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
