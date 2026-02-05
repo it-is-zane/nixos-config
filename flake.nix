@@ -15,7 +15,12 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
