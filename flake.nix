@@ -20,7 +20,8 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ ];
+      systems = [ "x86_64-linux" ];
+      imports = [ ./modules/lmms.nix ];
       flake = {
         nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
@@ -31,11 +32,10 @@
                 inputs.plasma-manager.homeModules.plasma-manager
               ];
             }
+            inputs.self.nixosModules.lmms
             ./configuration.nix
           ];
         };
       };
-      systems = [ "x86_64-linux" ];
-      perSystem = { config, pkgs, ... }: { };
     };
 }
