@@ -117,10 +117,7 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      # kdePackages.kate
-      # thunderbird
-    ];
+    packages = with pkgs; [ ];
   };
 
   users.users.games = {
@@ -132,8 +129,6 @@
     ];
     packages = with pkgs; [
       steam
-      # kdePackages.kate
-      # thunderbird
     ];
   };
 
