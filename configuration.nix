@@ -5,16 +5,10 @@
 {
   config,
   pkgs,
-  home-manager,
   inputs,
   ...
 }:
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,9 +45,6 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-
-  services.scx.enable = true;
-  services.scx.scheduler = "scx_lavd";
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -94,86 +85,12 @@
 
   hardware.bluetooth.enable = true;
 
-  fileSystems."/mnt/games" = {
-    device = "/dev/disk/by-uuid/e3d0a5b0-792e-4edc-b96f-37f67314c71a";
-    fsType = "ext4";
-    options = [
-      "rw"
-      "exec"
-      "nofail"
-    ];
-  };
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
-  ];
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.zaneg = {
-    isNormalUser = true;
-    description = "Zane Gant";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      # kdePackages.kate
-      # thunderbird
-    ];
-  };
-
-  users.users.games = {
-    isNormalUser = true;
-    description = "Steam Isolation";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      steam
-      # kdePackages.kate
-      # thunderbird
-    ];
-  };
-
-  home-manager.users.root = {
-    imports = [ ./home-manager/base.nix ];
-  };
-  home-manager.users.zaneg = {
-    imports = [
-      ./home-manager/base.nix
-      ./home-manager/user.nix
-      ./home-manager/programmer.nix
-    ];
-  };
-  home-manager.users.games = {
-    imports = [
-      ./home-manager/base.nix
-      ./home-manager/user.nix
-    ];
-  };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
-    git
-    discord-ptb
-    helix
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

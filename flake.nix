@@ -21,23 +21,24 @@
       home-manager,
       ...
     }@inputs:
-    let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          inputs.home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager
           {
             home-manager.sharedModules = [
               inputs.plasma-manager.homeModules.plasma-manager
             ];
+            home-manager.useUserPackages = true;
           }
           ./configuration.nix
+          ./hardware-configuration.nix
+
+          ./users/root.nix
+          ./users/zane.nix
+          ./users/games.nix
         ];
       };
-
     };
-
 }
