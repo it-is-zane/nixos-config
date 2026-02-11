@@ -13,6 +13,12 @@
       wallpaperPlainColor = "0,0,0";
     };
 
+    kwin.effects.blur = {
+      enable = true;
+      noiseStrength = 0;
+      strength = 6;
+    };
+
     kscreenlocker.appearance.wallpaperPlainColor = "0,0,0";
 
     panels = [
