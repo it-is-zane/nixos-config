@@ -34,11 +34,11 @@
       pkgsRocm.blender
       discord-ptb
       firefox
+      furnace
     ];
 
     systemd.user.sessionVariables.EDITOR = "hx";
     home.sessionVariables.EDITOR = "hx";
     programs.kitty.environment.EDITOR = "hx";
   };
-
 }
