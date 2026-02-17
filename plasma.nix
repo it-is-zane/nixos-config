@@ -21,6 +21,12 @@
 
     kscreenlocker.appearance.wallpaperPlainColor = "0,0,0";
 
+    powerdevil.AC = {
+      autoSuspend.action = "sleep";
+      autoSuspend.idleTimeout = 60 * 15; # 15 minutes
+      whenSleepingEnter = "standby";
+    };
+
     panels = [
       {
         location = "top";
