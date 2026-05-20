@@ -5,6 +5,9 @@
   ...
 }:
 {
+  imports = [
+    ../niri.nix
+  ];
   users.users.games = {
     isNormalUser = true;
     description = "Steam Isolation";
@@ -18,7 +21,7 @@
   home-manager.users.games = {
     home.stateVersion = "25.11";
     imports = [
-      ../plasma.nix
+      # ../plasma.nix
       ../kitty.nix
     ];
 

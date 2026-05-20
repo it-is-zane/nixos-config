@@ -16,7 +16,7 @@
       };
       editor.end-of-line-diagnostics = "hint";
       editor.inline-diagnostics = {
-        cursor-line = "error";
+        cursor-line = "hint";
         other-lines = "disable";
       };
     };

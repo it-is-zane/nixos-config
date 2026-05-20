@@ -8,7 +8,6 @@
   home-manager.users.root = {
     home.stateVersion = "25.11";
     imports = [
-      # ../home-manager/base.nix
       ../helix.nix
       ../git.nix
     ];
