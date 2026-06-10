@@ -8,7 +8,7 @@
   programs.helix = {
     enable = true;
     settings = {
-      theme = "vim_dark_high_contrast";
+      theme = "ayu_dark";
       editor.cursor-shape = {
         normal = "block";
         insert = "bar";
