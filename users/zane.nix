@@ -10,6 +10,7 @@
     ../vr.nix
     ../zen.nix
     ../bar.nix
+    ../llm.nix
     # ../star-citizen.nix
   ];
   users.users.zaneg = {
@@ -64,7 +65,12 @@
 
   programs.gamescope = {
     enable = true;
-    capSysNice = true;
+    capSysNice = false;
+  };
+  services.ananicy = {
+    enable = true;
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-rules-cachyos;
   };
   programs.steam = {
     enable = true;
