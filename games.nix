@@ -2,37 +2,26 @@
   config,
   pkgs,
   inputs,
+  username,
   ...
 }:
 {
-  imports = [
-    ../niri.nix
-  ];
-  users.users.games = {
-    isNormalUser = true;
-    description = "Steam Isolation";
-    extraGroups = [
-      "networkmanager"
-      # "wheel"
-    ];
-    packages = with pkgs; [ ];
+  users.users.${username} = {
+    packages = with pkgs; [ beyond-all-reason ];
   };
 
-  home-manager.users.games = {
-    home.stateVersion = "25.11";
-    imports = [
-      # ../plasma.nix
-      ../kitty.nix
-    ];
-
-    home.packages = with pkgs; [
-      discord-ptb
-      firefox
-    ];
+  programs.gamescope = {
+    enable = true;
+    capSysNice = false;
   };
-
+  services.ananicy = {
+    enable = true;
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-rules-cachyos;
+  };
   programs.steam = {
     enable = true;
+    gamescopeSession.enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;

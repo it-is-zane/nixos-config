@@ -28,10 +28,16 @@
           ./configuration.nix
           ./hardware-configuration.nix
 
+          ./users.nix
           ./doas.nix
-
-          ./users/root.nix
-          ./users/zane.nix
+          ./niri.nix
+          ./vr.nix
+          ./bar.nix
+          ./llm.nix
+          ./editor.nix
+          ./git.nix
+          ./terminal.nix
+          ./games.nix
         ];
       };
     };
