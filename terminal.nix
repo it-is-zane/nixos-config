@@ -12,16 +12,30 @@
         bottom
         ripgrep
         tmux
+        wiki-tui
       ];
+
+      programs.zsh = {
+        enable = true;
+      };
     }
   ];
+
+  # programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+  };
+  users.defaultUserShell = pkgs.zsh;
 
   home-manager.users.${username} = {
     programs.kitty = {
       enable = true;
+      shellIntegration.enableBashIntegration = true;
+      shellIntegration.enableZshIntegration = true;
       shellIntegration.enableFishIntegration = true;
       enableGitIntegration = true;
       settings = {
+        resize_in_steps = true;
         confirm_os_window_close = 0;
         # dynamic_background_opacity = true;
         enable_audio_bell = false;
