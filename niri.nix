@@ -6,16 +6,18 @@
 }:
 {
   programs.niri.enable = true;
+
   environment.systemPackages = with pkgs; [
-    noctalia-shell
-    quickshell
     xwayland-satellite
+    noctalia-shell
+    bibata-cursors
+    # whitesur-cursors
   ];
 
   # waybar ueses a special font for icons
-  fonts.packages = with pkgs; [ font-awesome ];
+  # fonts.packages = with pkgs; [ font-awesome ];
 
-  networking.wireless.enable = true; # niri doesn't manage wireless like kde/gnome
+  # networking.wireless.enable = true; # niri doesn't manage wireless like kde/gnome
 
   services.blueman.enable = true;
 }
