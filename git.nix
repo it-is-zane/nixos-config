@@ -5,6 +5,7 @@
   ...
 }:
 {
+  environment.systemPackages = [ pkgs.git ];
 
   home-manager.sharedModules = [
     {
