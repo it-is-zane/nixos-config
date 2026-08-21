@@ -38,6 +38,7 @@
           ./git.nix
           ./terminal.nix
           ./games.nix
+          ./zen.nix
         ];
       };
     };
