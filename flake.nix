@@ -33,7 +33,7 @@
           ./niri.nix
           ./vr.nix
           ./bar.nix
-          ./llm.nix
+          # ./llm.nix
           ./editor.nix
           ./git.nix
           ./terminal.nix
