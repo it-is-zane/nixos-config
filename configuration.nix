@@ -23,7 +23,10 @@
     # Use latest kernel.
     kernelPackages = pkgs.linuxPackages_latest;
 
-    initrd.kernelModules = [ "amdgpu" ];
+    initrd = {
+      kernelModules = [ "amdgpu" ];
+      luks.devices."luks-9106207c-8d6a-493c-8a5a-84ab8d233b19".device = "/dev/disk/by-uuid/9106207c-8d6a-493c-8a5a-84ab8d233b19";
+    };
   };
 
   # Set your time zone.
@@ -50,8 +53,8 @@
     interfaces.wlp15s0.ipv6.addresses = [
       {
         # ======Subnet=======
-        # 2606:c800:6095:4300::5fe
-        address = "2606:c800:6095:4300::5fe";
+        # 2606:c800:6095:4300:4e59:314d:46f6:c6de/64
+        address = "2606:c800:6095:4300:4e59:314d:46f6:c6de";
         prefixLength = 64;
       }
     ];
