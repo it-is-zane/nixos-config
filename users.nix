@@ -5,7 +5,14 @@
   ...
 }:
 {
-  _module.args.username = "zaneg";
+  _module.args = {
+    username = "zaneg";
+  };
+
+  home-manager.users = {
+    root = {};
+    zaneg = {};
+  };
 
   home-manager.sharedModules = [
     {

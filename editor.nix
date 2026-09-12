@@ -11,24 +11,36 @@
         enable = true;
         settings = {
           theme = "ayu_dark";
-          editor.cursor-shape = {
-            normal = "block";
-            insert = "bar";
-            select = "underline";
-          };
-          editor.end-of-line-diagnostics = "hint";
-          editor.inline-diagnostics = {
-            cursor-line = "hint";
-            other-lines = "disable";
+          editor = {
+            cursor-shape = {
+              normal = "block";
+              insert = "bar";
+              select = "underline";
+            };
+            end-of-line-diagnostics = "hint";
+            inline-diagnostics = {
+              cursor-line = "hint";
+              other-lines = "disable";
+            };
+            lsp.display-inlay-hints = true;
+            lsp.display-progress-messages = true;
           };
         };
-        languages.language = [
-          {
-            name = "nix";
-            auto-format = true;
-            formatter.command = pkgs.lib.getExe pkgs.nixfmt;
-          }
-        ];
+        languages = {
+          language-server = {
+            typos = {
+              command = "${pkgs.lib.getExe pkgs.typos-lsp}";
+            };
+          };
+          language = [
+            {
+              name = "nix";
+              auto-format = true;
+              formatter.command = pkgs.lib.getExe pkgs.nixfmt;
+            }
+          ];
+        };
+
       };
 
       systemd.user.sessionVariables.EDITOR = "hx";
